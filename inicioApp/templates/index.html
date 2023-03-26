@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>PiggaPizza</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+{{ err }}
+<div id="login-form-wrap">
+  <h2>Acceso al Sistema</h2>
+  <form id="login-form" method="POST" action="/loginAction/">
+    {% csrf_token %}
+    <p>
+    <input type="text" id="txtuser" name="txtuser" placeholder="Usuario" required><i class="validation"><span></span><span></span></i>
+    </p>
+    <p>
+    <input type="password" id="txtpass" name="txtpass" placeholder="Contraseña" required><i class="validation"><span></span><span></span></i>
+    </p>
+    <p>
+    <input type="submit" id="login" value="Login">
+    </p>
+  </form>
+  <div id="create-account-wrap">
+    <p>¿No estas registrado? <a href="{% url 'registerUrl' %}">Crear Cuenta</a><p>
+  </div><!--create-account-wrap-->
+</div><!--login-form-wrap-->
+<!-- partial -->
+  
+</body>
+</html>

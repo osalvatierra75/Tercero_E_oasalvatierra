@@ -1,0 +1,61 @@
+{% extends "./base.html" %}
+
+{% block title %} Gestión de Pedidos {% endblock %}
+
+{% block body %}
+    
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-12">
+        <h1>Listado de Pedidos</h1>  
+        <form class="form-group col-sm-12 col-md-6 col-lg-8 col-xl-12" action="/buscar/" method="get">
+            <div class="form-group-item" style="display: inline-block;">
+                <label for="texto">Buscar por Nombre:</label>
+                <input type="text" name="pBuscar" class="btn btn-outline-primary float" style="display: inline-block; margin: 0 10px;">
+                <input class="btn btn-primary" style="display: inline-block;" type="submit" value="Buscar">
+            </div>
+            
+        </form>
+        
+        <div class="row col-12 justify-content-end mb-2 pr-0">            
+            <a href="{% url 'registerpedidoUrl' %}" class="btn btn-primary">Nuevo Pedido</a>
+        </div>
+         
+        <div class="table-responsive py-2">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th hidden>Código</th>
+                        <th>Cliente</th>
+                        <th>Tipo Pizzas</th>
+                        <th>Forma Pago</th>
+                        <th align="right">Precio</th>
+                        <th align="right">Cantidad</th>
+                        <th align="right">Total</th>
+                        <th colspan="2">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in pedidos %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td hidden="hidden">{{c.codigo}}</td>
+                        <td>{{c.cliente}}</td>
+                        <td>{{c.tipopizza}}</td>
+                        <td>{{c.formapago}}</td>
+                        <td align="right">{{c.precio}}</td>
+                        <td align="right">{{c.cantidad}}</td>
+                        <td align="right">{{c.total}}</td>
+                        <td><a href="/editarPedido/{{ c.codigo}}" class="btn btn-info">Editar</a></td>
+                        <td><a href="/eliminarPedido/{{ c.codigo}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

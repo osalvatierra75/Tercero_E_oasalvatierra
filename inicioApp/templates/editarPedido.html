@@ -1,0 +1,76 @@
+{% extends "./base.html" %}
+
+{% block title %} Gestión de Pedidos {% endblock %}
+
+{% block body %}
+<div class="row">
+    <br><br>
+    <div class="col-md-4 offset-md-4">
+        <h2>Editar Pedido</h2>
+        <div class="card">
+            <div classs="card-body">
+                <form action="/actualizarPedido/" method="POST" class="form-group">
+                    {% csrf_token %}
+                    <div class="form-group-item">
+                        <input type="text" hidden="hidden" id="txtcodigo" name="txtcodigo" class="form-control" value="{{pedido.codigo}}">
+                        <input type="text" id="txtcliente" name="txtcliente" class="form-control" value="{{pedido.cliente}}" maxlength="50"  required>
+                    </div>
+                    
+                    <div class="form-group-item">
+                        <select name="tipopizza" id="mypizza" class="form-control">
+                            {% for p in mypizza %}
+                                {% if p == pedido.tipopizza %}
+                                    <option value="{{ p.idtipopizza }}" selected>{{ p.descripcion }}</option>
+                                {% else %}
+                                    <option value="{{ p.idtipopizza }}">{{ p.descripcion }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="form-group-item">
+                        <select name="formapago" id="mfpago" class="form-control">
+                            {% for p in mfpago %}
+                                {% if p == pedido.formapago %}
+                                    <option value="{{ p.idformapago }}" selected>{{ p.descripcion }}</option>
+                                {% else %}
+                                    <option value="{{ p.idformapago }}">{{ p.descripcion }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group-item">
+                        <input type="number" id="txtprecio" name="txtprecio" class="form-control" value="{{pedido.precio}}" placeholder="Precio" required>
+                    </div>        
+                    <div class="form-group-item">
+                        <input type="number" id="txtcant" name="txtcant" class="form-control" maxlength="10" value="{{pedido.cantidad}}" placeholder="Cantidad" required>
+                    </div>                                
+                    <div class="form-group-item">                        
+
+                        <input type="text" id="total_ventas" name="total_ventas" class="form-control"  value="{{pedido.total}}" maxlength="10" readonly>                        
+                    </div>
+                    <div class="form-group-item">
+                            <button type="Submit" class="btn btn-success btn-block text-white">Guardar</button>
+                    </div>
+                    <div class="form-group-item">
+                    <button type="Submit" class="btn btn-danger btn-block text-white" onclick="history.back()">Cancelar</button>
+                </div>
+                </form>
+                
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+      $("#txtcant, #txtprecio").on("input", function() {
+        var cantidad = parseFloat($("#txtcant").val()) || 0;
+        var precio = parseFloat($("#txtprecio").val()) || 0;
+        var total = cantidad * precio;
+        $("#total_ventas").val(total.toFixed(2));
+      });
+    });
+  </script>
+{% endblock %}
